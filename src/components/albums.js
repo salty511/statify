@@ -12,7 +12,7 @@ console.log(response)
 class Album extends Component {
   async getSpotifyLinks(url) {
     try {
-      const html = response.data;
+      /* const html = response.data; */
       const $ = cheerio.load(html);
       const scdnLinks = new Set();
   
