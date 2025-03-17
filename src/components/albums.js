@@ -9,7 +9,11 @@ const SpotifyWebApi = require('spotify-web-api-node');
 class Album extends Component {
   async getSpotifyLinks(url) {
     try {
-      const response = await axios.get("/.netlify/functions/api/scrape")
+      const response = await axios.get("/.netlify/functions/api/scrape", {
+        headers: {
+          url
+        }
+      })
       console.log(response)
       const html = response.data;
       const $ = cheerio.load(html);

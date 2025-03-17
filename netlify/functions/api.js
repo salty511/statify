@@ -17,10 +17,10 @@ router.get("/", (req, res) => {
 })
 
 router.get("/scrape", async (req, res) => {
-/*     const url = req.headers.url
+    const url = req.headers.url
     console.log(url)
-    const response = await axios.get(url) */
-    res.send("KOK")
+    const response = await axios.get(url)
+    res.send(response)
 })
 
 router.get("/login", (req, res) => {
