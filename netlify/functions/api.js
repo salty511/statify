@@ -16,11 +16,11 @@ router.get("/", (req, res) => {
 	res.send("Hi from root")
 })
 
-router.get("/login/scrape", async (req, res) => {
-    const url = req.headers.url
+router.get("/scrape", async (req, res) => {
+/*     const url = req.headers.url
     console.log(url)
-    const response = await axios.get(url)
-    res.send(response.data)
+    const response = await axios.get(url) */
+    res.send("KOK")
 })
 
 router.get("/login", (req, res) => {

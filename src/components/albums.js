@@ -5,14 +5,10 @@ import axios from "axios";
 const cheerio = require('cheerio');
 const SpotifyWebApi = require('spotify-web-api-node');
 
-const response = await axios.get(process.env.REACT_APP_loginURL + "/scrape", {
-  headers: {
-    url: "https://open.spotify.com/track/2bPbyTiplZXroFIvW8Fjo0"
-  }
-})
+/* const response = await axios.get("/.netlify/functions/api/scrape")
 
 console.log(response)
-
+ */
 class Album extends Component {
   async getSpotifyLinks(url) {
     try {
