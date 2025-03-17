@@ -4,11 +4,11 @@ import "./albums-style.css"
 import axios from "axios";
 const cheerio = require('cheerio');
 const SpotifyWebApi = require('spotify-web-api-node');
+axios.defaults.headers.get['Content-Type'] ='application/x-www-form-urlencoded';
+
 
 class Album extends Component {
   async getSpotifyLinks(url) {
-    console.log(url)
-    console.log(await axios.get(url))
     try {
       const response = await axios.get(url);
       const html = response.data;
