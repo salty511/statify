@@ -7,8 +7,10 @@ const SpotifyWebApi = require('spotify-web-api-node');
 
 class Album extends Component {
   async getSpotifyLinks(url) {
+    console.log(url)
     try {
       const response = await axios.get(url);
+      console.log(response)
       const html = response.data;
       const $ = cheerio.load(html);
       const scdnLinks = new Set();
@@ -35,7 +37,6 @@ class Album extends Component {
    * @returns {Promise<Object>} Object containing success status and results
    */
   async searchAndGetLinks(songName, limit = 5) {
-    console.log(this.props)
     try {
       if (!songName) {
         throw new Error('Song name is required');
@@ -56,14 +57,14 @@ class Album extends Component {
   
       const tracks = searchResults.body.tracks.items.slice(0, limit);
       const results = await Promise.all(tracks.map(async (track) => {
-        const spotifyUrl = track.external_urls.spotify;
-        const previewUrls = await this.getSpotifyLinks(spotifyUrl);
+      const spotifyUrl = track.external_urls.spotify;
+      const previewUrls = await this.getSpotifyLinks(spotifyUrl);
         
-        return {
-          name: `${track.name} - ${track.artists.map(artist => artist.name).join(', ')}`,
-          spotifyUrl: spotifyUrl,
-          previewUrls: previewUrls
-        };
+      return {
+        name: `${track.name} - ${track.artists.map(artist => artist.name).join(', ')}`,
+        spotifyUrl: spotifyUrl,
+        previewUrls: previewUrls
+      };
       }));
   
       return {
@@ -80,7 +81,6 @@ class Album extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div style={{ paddingBottom: "10px" }}>
         <div className="card">
