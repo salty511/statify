@@ -20,11 +20,12 @@ class MainPage extends Component {
 
     renderAlbums(dataSet) {
       let albumsToRender = dataSet.topTracks
+      console.log(this.props.accessToken)
       return(
         <div className="container">
           <div className="row">
             {albumsToRender.slice(0, 20).map((track) => {
-              return (<div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6"><Album trackInfo={track} onClickHandler={this.onClickHandler_Album} onClickOpenInSpotify={this.openSongInSpotify}/></div>)
+              return (<div className="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6"><Album trackInfo={track} onClickHandler={this.onClickHandler_Album} onClickOpenInSpotify={this.openSongInSpotify} accessToken={this.props.accessToken}/></div>)
             })}
           </div>
         </div>
