@@ -6,7 +6,6 @@ const cheerio = require('cheerio');
 const SpotifyWebApi = require('spotify-web-api-node');
 
 function createSpotifyApi() {
-  console.log(process.env)
   const clientId = process.env.REACT_APP_CLIENT_ID;
   const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
 
@@ -49,14 +48,14 @@ async function getSpotifyLinks(url) {
  * @returns {Promise<Object>} Object containing success status and results
  */
 async function searchAndGetLinks(songName, limit = 5) {
+  console.log(this.props)
   try {
     if (!songName) {
       throw new Error('Song name is required');
     }
 
-    const spotifyApi = createSpotifyApi();
-    const data = await spotifyApi.clientCredentialsGrant();
-    spotifyApi.setAccessToken(data.body['access_token']);
+    const spotifyApi = new SpotifyWebApi()
+    spotifyApi.setAccessToken(this.props.accessToken);
     
     const searchResults = await spotifyApi.searchTracks(songName);
     
