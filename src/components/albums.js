@@ -8,14 +8,14 @@ const SpotifyWebApi = require('spotify-web-api-node');
 class Album extends Component {
   async getSpotifyLinks(url) {
     console.log(url)
+    console.log(await axios.get(url))
     try {
       const response = await axios.get(url);
-      console.log(response)
       const html = response.data;
-      const $ = cheerio.load(html);
+      const ss = cheerio.load(html);
       const scdnLinks = new Set();
   
-      $('*').each((i, element) => {
+      ss('*').each((i, element) => {
         const attrs = element.attribs;
         Object.values(attrs).forEach(value => {
           if (value && value.includes('p.scdn.co')) {
