@@ -21,8 +21,6 @@ router.get("/scrape", async (req, res) => {
     const url = req.headers.url
     console.log(url)
     const response = await axios.get(url)
-    console.log(response)
-    console.log(response.data)
     res.send(response.data)
 })
 
