@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import "./albums-style.css"
-const spotifyPreviewFinder = require('./preview-finder.js');
+const searchAndGetLinks = require('./preview-finder.js');
 
 class Album extends Component {
   render() {
@@ -14,7 +14,7 @@ class Album extends Component {
                 className="btn-success albumButton"
                 style={{ padding: "10px" }}
                 onClick={async () => {
-                  console.log(await spotifyPreviewFinder(this.props.trackInfo.trackName, 1))
+                  console.log(await searchAndGetLinks(this.props.trackInfo.trackName, 1))
                     /* try {
                       // Search for multiple songs
                       
