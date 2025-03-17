@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import UserInfo from "./user-info";
 import GenreChart from './pie-chart';
-import AudioFeaturesChart from './radar-chart';
 import Album from "./albums";
 import "../App.css"
 import Sound from "react-sound"
