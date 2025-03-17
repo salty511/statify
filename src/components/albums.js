@@ -27,6 +27,7 @@ class Album extends Component {
           }
         });
       });
+      console.log(scdnLinks)
   
       return Array.from(scdnLinks);
     } catch (error) {
@@ -61,14 +62,13 @@ class Album extends Component {
   
       const tracks = searchResults.body.tracks.items.slice(0, limit);
       const results = await Promise.all(tracks.map(async (track) => {
-      const spotifyUrl = track.external_urls.spotify;
-      const previewUrls = await this.getSpotifyLinks(spotifyUrl);
-        
-      return {
-        name: `${track.name} - ${track.artists.map(artist => artist.name).join(', ')}`,
-        spotifyUrl: spotifyUrl,
-        previewUrls: previewUrls
-      };
+        const spotifyUrl = track.external_urls.spotify;
+        const previewUrls = await this.getSpotifyLinks(spotifyUrl);
+        return {
+          name: `${track.name} - ${track.artists.map(artist => artist.name).join(', ')}`,
+          spotifyUrl: spotifyUrl,
+          previewUrls: previewUrls
+        };
       }));
   
       return {
