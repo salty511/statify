@@ -89,4 +89,4 @@ async function searchAndGetLinks(songName, limit = 5) {
   }
 }
 
-module.exports = searchAndGetLinks;
+export default searchAndGetLinks;
