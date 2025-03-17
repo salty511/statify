@@ -66,6 +66,9 @@ class MainPage extends Component {
     }
 
     onClickHandler_Album(soundURL) {
+      console.log(soundURL)
+      console.log(this.state)
+
       if (!(soundURL === this.state.previewURL)) {
         this.setState({playStatus: Sound.status.PLAYING})
       }
