@@ -102,8 +102,8 @@ class Album extends Component {
                       if (previewURL.success && previewURL.results.length > 0) {
                         const song = previewURL.results[0]
                         console.log(`\nFound: ${song.name}`)
-                        console.log(`Preview URL: ${song.previewUrl[0]}`)
-                        this.props.onClickHandler(song.previewUrl[0])
+                        console.log(`Preview URL: ${song.previewUrls[0]}`)
+                        this.props.onClickHandler(song.previewUrls[0])
                       }
                     } catch (error) {
                       console.error('Error:', error.message)
