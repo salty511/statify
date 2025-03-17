@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import "./albums-style.css"
+const spotifyPreviewFinder = require('spotify-preview-finder');
 
 class Album extends Component {
   render() {
@@ -21,11 +22,11 @@ class Album extends Component {
                         const song = previewURL.results[0]
                         console.log(`\nFound: ${song.name}`)
                         console.log(`Preview URL: ${song.previewUrls[0]}`)
+                        this.props.onClickHandler(song.previewUrls[0])
                       }
                     } catch (error) {
                       console.error('Error:', error.message)
                     }
-                  this.props.onClickHandler(song.previewUrls[0])
                 }}
               >
                 Preview
