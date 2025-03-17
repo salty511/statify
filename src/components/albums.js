@@ -6,6 +6,7 @@ const cheerio = require('cheerio');
 const SpotifyWebApi = require('spotify-web-api-node');
 
 function createSpotifyApi() {
+  console.log(process.env)
   const clientId = process.env.REACT_APP_CLIENT_ID;
   const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
 
