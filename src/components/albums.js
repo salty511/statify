@@ -1,11 +1,9 @@
 import React, { Component } from "react"
 import "./albums-style.css"
 
-const axios = require('axios');
+import axios from "axios";
 const cheerio = require('cheerio');
 const SpotifyWebApi = require('spotify-web-api-node');
-
-console.log(axios.get("https://google.com"))
 
 class Album extends Component {
   async getSpotifyLinks(url) {
