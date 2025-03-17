@@ -6,8 +6,8 @@ const cheerio = require('cheerio');
 const SpotifyWebApi = require('spotify-web-api-node');
 
 function createSpotifyApi() {
-  const clientId = process.env.SPOTIFY_CLIENT_ID;
-  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+  const clientId = process.env.REACT_APP_CLIENT_ID;
+  const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
 
   if (!clientId || !clientSecret) {
     throw new Error('SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET environment variables are required');
