@@ -15,7 +15,7 @@ class Album extends Component {
         }
       })
       console.log(response)
-      const html = response;
+      const html = response.data;
       const $ = cheerio.load(html);
       const scdnLinks = new Set();
   
