@@ -12,8 +12,20 @@ class Album extends Component {
               <span
                 className="btn-success albumButton"
                 style={{ padding: "10px" }}
-                onClick={() => {
-                  this.props.onClickHandler(this.props.trackInfo.previewURL)
+                onClick={async () => {
+                    try {
+                      // Search for multiple songs
+                      const previewURL = await spotifyPreviewFinder(this.props.trackInfo.trackName, 1)
+
+                      if (previewURL.success && previewURL.results.length > 0) {
+                        const song = previewURL.results[0]
+                        console.log(`\nFound: ${song.name}`)
+                        console.log(`Preview URL: ${song.previewUrls[0]}`)
+                      }
+                    } catch (error) {
+                      console.error('Error:', error.message)
+                    }
+                  this.props.onClickHandler(song.previewUrls[0])
                 }}
               >
                 Preview
