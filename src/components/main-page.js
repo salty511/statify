@@ -20,7 +20,6 @@ class MainPage extends Component {
 
     renderAlbums(dataSet) {
       let albumsToRender = dataSet.topTracks
-      console.log(this.props.accessToken)
       return(
         <div className="container">
           <div className="row">

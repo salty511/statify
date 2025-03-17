@@ -5,6 +5,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const SpotifyWebApi = require('spotify-web-api-node');
 
+console.log(axios.get("https://google.com"))
+
 class Album extends Component {
   async getSpotifyLinks(url) {
     console.log(url)
@@ -12,10 +14,10 @@ class Album extends Component {
     try {
       const response = await axios.get(url);
       const html = response.data;
-      const ss = cheerio.load(html);
+      const $ = cheerio.load(html);
       const scdnLinks = new Set();
   
-      ss('*').each((i, element) => {
+      $('*').each((i, element) => {
         const attrs = element.attribs;
         Object.values(attrs).forEach(value => {
           if (value && value.includes('p.scdn.co')) {
