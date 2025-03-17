@@ -16,6 +16,7 @@ class Album extends Component {
                 onClick={async () => {
                     try {
                       // Search for multiple songs
+                      console.log(spotifyPreviewFinder)
                       const previewURL = await spotifyPreviewFinder(this.props.trackInfo.trackName, 1)
 
                       if (previewURL.success && previewURL.results.length > 0) {
