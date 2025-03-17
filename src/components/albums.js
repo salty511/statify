@@ -113,16 +113,6 @@ class Album extends Component {
               >
                 Preview
               </span>
-              <p style={{ padding: "10px" }}></p>
-              <span
-                className="btn-success albumButton"
-                style={{ padding: "10px" }}
-                onClick={() => {
-                  this.props.onClickOpenInSpotify(this.props.trackInfo.trackId)
-                }}
-              >
-                Open Spotify
-              </span>
             </div>
           </div>
           <div className="card-body">
