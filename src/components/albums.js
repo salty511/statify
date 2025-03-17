@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import "./albums-style.css"
-const spotifyPreviewFinder = require('preview-finder.js');
+const spotifyPreviewFinder = require('./preview-finder.js');
 
 class Album extends Component {
   render() {
