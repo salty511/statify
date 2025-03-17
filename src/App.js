@@ -49,7 +49,7 @@ class App extends Component {
           console.log(timeRange + ": User call complete")
           serverData.user = {
             userName: data.display_name,
-            profileImage: data.images[0] ? data.images[0].url : "https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image",
+            profileImage: data.images[0] ? data.images[0].url : null,
             followers: data.followers.total
           }
         })
@@ -81,36 +81,6 @@ class App extends Component {
               uri: trackObject.uri
             })
           })
-        }).then(() => { // Get audioFeatures data
-          console.log(timeRange + ": Making audio features call")
-          return(
-            fetch("https://api.spotify.com/v1/audio-features/?ids=" +
-              //track id query params
-              serverData.topTracks.map((trackObject) => {
-                return(trackObject.trackId)
-              }).join(), {
-                headers: {"Authorization": "Bearer " + accessToken}
-              } //headers in the api call (auth token)
-            ).then((response) => { //function ran when fetch() promise resolves
-              console.log(timeRange + ": Audio features call complete")
-              return(response.json()) 
-            }).then((data) => {
-              console.log(data)
-              serverData.audioFeatures = data.audio_features.map((audioFeatureObject) => {
-                return({
-                  danceability: audioFeatureObject.danceability,
-                  energy: audioFeatureObject.energy,
-                  speechiness: audioFeatureObject.speechiness,
-                  instrumentalness: audioFeatureObject.instrumentalness,
-                  acousticness: audioFeatureObject.acousticness,
-                  key: audioFeatureObject.key,
-                  loudness: audioFeatureObject.loudness,
-                  valence: audioFeatureObject.valence,
-                  tempo: audioFeatureObject.tempo
-                })
-              })
-            })
-          )
         })
       }
 

@@ -42,9 +42,9 @@ class MainPage extends Component {
             <div className="col" style={{paddingBottom: "10px"}}>
               <GenreChart genreData={dataSet.topArtists}/>
             </div>
-            <div className="col">
+            {/* <div className="col">
               <AudioFeaturesChart audioFeaturesData={dataSet.audioFeatures}/>
-            </div>
+            </div> */}
           </div>
         </div>
       )
