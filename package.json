@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^1.8.3",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^5.0.0",
     "chart.js": "^2.9.4",
     "dotenv": "^16.4.7",
     "path-browserify": "^1.0.1",
