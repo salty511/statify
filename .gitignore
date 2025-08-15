@@ -13,9 +13,7 @@ node_modules
 .pnp.js
 
 # Production builds
-dist
-dist-ssr
-*.local
+build
 
 # Editor directories and files
 .vscode/*
