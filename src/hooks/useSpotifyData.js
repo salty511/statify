@@ -16,6 +16,11 @@ export const useSpotifyData = () => {
       const response = await fetch("https://api.spotify.com/v1/me", {
         headers: { "Authorization": "Bearer " + token }
       })
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const data = await response.json()
       
       setUser({
@@ -39,6 +44,11 @@ export const useSpotifyData = () => {
           headers: { "Authorization": "Bearer " + token }
         }
       )
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const data = await response.json()
       
       const processedTracks = data.items.map((trackObject) => {
@@ -82,6 +92,11 @@ export const useSpotifyData = () => {
           headers: { "Authorization": "Bearer " + token }
         }
       )
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const data = await response.json()
       
       const processedArtists = data.items.map((artistObject) => ({
@@ -101,34 +116,42 @@ export const useSpotifyData = () => {
     
     console.log(`${timeRange}: Starting data fetch`)
     
-    // Fetch user data if not already fetched
-    if (!useStore.getState().user) {
-      await fetchUserData(token)
+    try {
+      // Fetch user data if not already fetched
+      if (!useStore.getState().user) {
+        await fetchUserData(token)
+      }
+      
+      // Fetch top tracks and artists
+      const [topTracks, topArtists] = await Promise.all([
+        fetchTopTracks(token, timeRange),
+        fetchTopArtists(token, timeRange)
+      ])
+      
+      // Combine data
+      const musicData = {
+        topTracks,
+        topArtists,
+        user: useStore.getState().user
+      }
+      
+      setMusicData(timeRange, musicData)
+      console.log(`${timeRange}: Data fetch complete`)
+    } catch (error) {
+      console.error(`Error in fetchDataForTimeRange for ${timeRange}:`, error)
     }
-    
-    // Fetch top tracks and artists
-    const [topTracks, topArtists] = await Promise.all([
-      fetchTopTracks(token, timeRange),
-      fetchTopArtists(token, timeRange)
-    ])
-    
-    // Combine data
-    const musicData = {
-      topTracks,
-      topArtists,
-      user: useStore.getState().user
-    }
-    
-    setMusicData(timeRange, musicData)
-    console.log(`${timeRange}: Data fetch complete`)
   }
 
   useEffect(() => {
-    if (accessToken) {
+    // Only fetch data if we have a valid access token
+    if (accessToken && accessToken.trim() !== '') {
+      console.log('Access token available, fetching data...')
       // Fetch data for all time ranges
       fetchDataForTimeRange(accessToken, 'short_term')
       fetchDataForTimeRange(accessToken, 'medium_term')
       fetchDataForTimeRange(accessToken, 'long_term')
+    } else {
+      console.log('No access token available, skipping data fetch')
     }
   }, [accessToken])
 

@@ -22,57 +22,74 @@ const GenreChart = ({ genreData }) => {
       }
     }
 
-    // Get top five genres
+    // Convert to array and sort by frequency
     const genreTotalsArray = Object.entries(genreTotals).map(([key, value]) => ({
       name: key,
       value: value
     }))
     
-    const topFiveGenres = genreTotalsArray
-      .sort((a, b) => b.value - a.value)
-      .slice(0, 5)
+    // Sort by frequency (highest first) and take top genres
+    const sortedGenres = genreTotalsArray.sort((a, b) => b.value - a.value)
 
-    // Filter similar genres
-    const filteredGenres = []
-    for (let y = 0; y < topFiveGenres.length; y++) {
-      for (let x = 0; x < topFiveGenres.length; x++) {
-        if (!(x === y)) {
-          const similarityValue = stringSimilarity.compareTwoStrings(
-            topFiveGenres[y].name, 
-            topFiveGenres[x].name
-          )
-          if (similarityValue < 0.5) {
-            const genreToPush = topFiveGenres[y].name.length < topFiveGenres[x].name.length ? 
-              topFiveGenres[y] : 
-              topFiveGenres[x]
-            filteredGenres.push({
-              name: genreToPush.name, 
-              value: genreToPush.value
-            })
+    // Group similar genres together
+    const groupedGenres = []
+    const processedGenres = new Set()
+
+    for (let i = 0; i < sortedGenres.length; i++) {
+      if (processedGenres.has(sortedGenres[i].name)) continue
+
+      const currentGenre = sortedGenres[i]
+      let totalCount = currentGenre.value
+      let representativeName = currentGenre.name
+
+      // Look for similar genres to group together
+      for (let j = i + 1; j < sortedGenres.length; j++) {
+        if (processedGenres.has(sortedGenres[j].name)) continue
+
+        const similarityValue = stringSimilarity.compareTwoStrings(
+          currentGenre.name, 
+          sortedGenres[j].name
+        )
+
+        // If genres are similar (similarity > 0.3), group them together
+        if (similarityValue > 0.3) {
+          totalCount += sortedGenres[j].value
+          // Use the shorter name as representative
+          if (sortedGenres[j].name.length < representativeName.length) {
+            representativeName = sortedGenres[j].name
           }
+          processedGenres.add(sortedGenres[j].name)
         }
       }
+
+      groupedGenres.push({
+        name: representativeName,
+        value: totalCount
+      })
+      processedGenres.add(currentGenre.name)
     }
 
-    // Use filtered genres if available, otherwise use top five
-    const finalGenres = filteredGenres.length > 0 ? filteredGenres : topFiveGenres
+    // Take top 8-10 grouped genres for better visualization
+    const finalGenres = groupedGenres
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 10)
 
     const labels = finalGenres.map(genre => genre.name)
     const values = finalGenres.map(genre => genre.value)
+
+    // Generate more colors for better variety
+    const colors = [
+      '#FF6384', '#36A2EB', '#FFCE56', '#39B838', '#A838B8',
+      '#FF9F40', '#4BC0C0', '#9966FF', '#FF99CC', '#FF6B6B'
+    ]
 
     return {
       labels,
       datasets: [{
         data: values,
-        backgroundColor: [
-          '#FF6384', '#36A2EB', '#FFCE56', '#39B838', '#A838B8'
-        ],
-        hoverBackgroundColor: [
-          '#FF6384', '#36A2EB', '#FFCE56', '#39B838', '#A838B8'
-        ],
-        borderColor: [
-          '#000205', '#000205', '#000205', '#000205', '#000205'
-        ],
+        backgroundColor: colors.slice(0, labels.length),
+        hoverBackgroundColor: colors.slice(0, labels.length),
+        borderColor: '#000205',
         borderWidth: 1
       }]
     }
@@ -86,14 +103,26 @@ const GenreChart = ({ genreData }) => {
         labels: {
           color: "#666",
           font: {
-            size: 12
-          }
-        }
+            size: 11
+          },
+          padding: 10
+        },
+        position: 'top',
+        align: 'start'
       },
       tooltip: {
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         titleColor: '#fff',
-        bodyColor: '#fff'
+        bodyColor: '#fff',
+        callbacks: {
+          label: function(context) {
+            const label = context.label || ''
+            const value = context.parsed
+            const total = context.dataset.data.reduce((a, b) => a + b, 0)
+            const percentage = ((value / total) * 100).toFixed(1)
+            return `${label}: ${value} (${percentage}%)`
+          }
+        }
       }
     }
   }
@@ -107,7 +136,7 @@ const GenreChart = ({ genreData }) => {
   }
 
   return (
-    <div style={{ height: '300px', width: '100%' }}>
+    <div style={{ height: '400px', width: '100%' }}>
       <Pie data={chartData} options={options} />
     </div>
   )

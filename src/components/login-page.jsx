@@ -2,12 +2,9 @@ import React from "react"
 
 const LoginPage = () => {
   const handleLogin = () => {
-    const clientId = process.env.VITE_SPOTIFY_CLIENT_ID
-    const redirectUri = process.env.VITE_SPOTIFY_REDIRECT_URI || 'http://localhost:3000'
-    const scope = 'user-read-private user-read-email user-top-read user-read-recently-played'
-    
-    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`
-    
+
+    const authUrl = process.env.VITE_LOGIN_URL || "http://localhost:9000/.netlify/functions/api/login"
+
     window.location.href = authUrl
   }
 
