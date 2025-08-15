@@ -1,9 +1,9 @@
 import React, { useCallback } from "react"
 import { useStore } from '../store/useStore'
-import UserInfo from "./user-info"
-import GenreChart from './pie-chart'
-import Album from "./albums"
-import AudioPlayer from "./audio-player"
+import UserInfo from "./user-info.jsx"
+import GenreChart from './pie-chart.jsx'
+import Album from "./albums.jsx"
+import AudioPlayer from "./audio-player.jsx"
 import "../App.css"
 
 const MainPage = () => {
