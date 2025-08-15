@@ -7,22 +7,26 @@ const Album = ({ trackInfo, onClickHandler, onClickOpenInSpotify, accessToken })
     }
   }
 
-  const handleSpotifyClick = () => {
-    if (trackInfo.uri) {
-      onClickOpenInSpotify(trackInfo.trackId)
-    }
-  }
-
   return (
     <div className="card mb-3" style={{ height: '100%' }}>
       <div className="card-body d-flex flex-column">
         {trackInfo.image && (
-          <img 
-            src={trackInfo.image} 
-            alt={`${trackInfo.trackName} album cover`}
-            className="card-img-top mb-3"
-            style={{ height: '200px', objectFit: 'cover' }}
-          />
+          <div className="img-preview-button position-relative mb-3">
+            <img 
+              src={trackInfo.image} 
+              alt={`${trackInfo.trackName} album cover`}
+              className="card-img-top"
+              style={{ height: '200px', objectFit: 'cover' }}
+            />
+            {trackInfo.previewURL && (
+              <button 
+                className="preview-button btn btn-sm btn-outline-primary"
+                onClick={handlePlayClick}
+              >
+                Preview
+              </button>
+            )}
+          </div>
         )}
         
         <div className="flex-grow-1">
@@ -46,15 +50,7 @@ const Album = ({ trackInfo, onClickHandler, onClickOpenInSpotify, accessToken })
               ▶️ Preview
             </button>
           )}
-          
-          {accessToken && (
-            <button 
-              className="btn btn-sm btn-outline-success"
-              onClick={handleSpotifyClick}
-            >
-              🎵 Open in Spotify
-            </button>
-          )}
+        
         </div>
       </div>
     </div>

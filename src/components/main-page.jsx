@@ -5,6 +5,7 @@ import GenreChart from './pie-chart.jsx'
 import Album from "./albums.jsx"
 import AudioPlayer from "./audio-player.jsx"
 import "../App.css"
+import "./albums-style.css"
 
 const MainPage = () => {
   const { 
