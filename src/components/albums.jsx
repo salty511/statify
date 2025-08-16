@@ -2,6 +2,8 @@ import React from "react"
 import axios from "axios";
 import * as cheerio from "cheerio";
 import SpotifyWebApi from "spotify-web-api-node";
+import dotenv from "dotenv"
+dotenv.config()
 
 const Album = ({ trackInfo, onClickHandler, accessToken }) => {
   async function getSpotifyLinks(url) {
