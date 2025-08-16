@@ -64,6 +64,7 @@ router.get("/callback", async (req, res) => {
     }
 })
 
+app.use(cors())
 app.use(`/.netlify/functions/api`, router)
 
 app.listen(9000, () => {

@@ -2,7 +2,7 @@ import React from "react"
 
 const AboutPage = () => {
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{textAlign: "left"}}>
       <div className="row justify-content-center">
         <div className="col-md-8">
           <div className="card">

@@ -10,7 +10,7 @@ const UserInfo = ({ userDetails }) => {
   }
 
   return (
-    <div className="card">
+    <div className="card" style={{maxWidth: "280px", margin: "0 auto"}}>
       <div className="card-body text-center">
         {userDetails.profileImage && (
           <img 

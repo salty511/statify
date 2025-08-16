@@ -33,7 +33,6 @@ const MainPage = () => {
               <Album 
                 trackInfo={track} 
                 onClickHandler={onClickHandler_Album} 
-                onClickOpenInSpotify={openSongInSpotify} 
                 accessToken={accessToken}
               />
             </div>
@@ -47,37 +46,29 @@ const MainPage = () => {
     if (!dataSet) return null
     
     return (
-      <div className="container" style={{paddingBottom: "20px", paddingTop: "20px"}}>
-        <div className="row">
-          <div className="col" style={{paddingBottom: "10px"}}>
-            <UserInfo userDetails={dataSet.user} />
-          </div>
-          <div className="col" style={{paddingBottom: "10px"}}>
+      <div className="container" style={{paddingBottom: "30px", paddingTop: "10px", display: "flex", justifyContent: "center"}}>
             <GenreChart genreData={dataSet.topArtists}/>
-          </div>
-        </div>
       </div>
     )
   }, [])
 
-  const onClickHandler = useCallback((timeFrame) => {
+  const onClickTimeFrame = useCallback((timeFrame) => {
     setCurrentDataSet(timeFrame)
   }, [setCurrentDataSet])
 
   const onClickHandler_Album = useCallback((soundURL) => {
-    console.log(soundURL)
-    console.log(playStatus)
-
-    if (!(soundURL === previewURL)) {
+    if (soundURL !== previewURL) {
+      // New song - set new URL and start playing
+      setPreviewURL(soundURL)
       setPlayStatus('PLAYING')
     } else {
+      // Same song - toggle play/pause
       if (playStatus === 'PLAYING') {
         setPlayStatus('STOPPED')
       } else {
         setPlayStatus('PLAYING')
       }
     }
-    setPreviewURL(soundURL)
   }, [previewURL, playStatus, setPlayStatus, setPreviewURL])
 
   const openSongInSpotify = useCallback((trackURI) => {
@@ -117,34 +108,13 @@ const MainPage = () => {
         onEnded={handleAudioEnded}
         onError={handleAudioError}
       />
+      <h3 style={{paddingTop: "20px"}}>Main Stats</h3>
       
-      <div className="container" style={{paddingBottom: "20px", paddingTop: "20px"}}>
-        <div className="row">
-          <div className="col">
-            <div className="btn-group" role="group" aria-label="Time Range Selection">
-              <button 
-                type="button" 
-                className={`btn ${currentDataSet === 'shortTerm' ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => onClickHandler('shortTerm')}
-              >
-                Last 4 Weeks
-              </button>
-              <button 
-                type="button" 
-                className={`btn ${currentDataSet === 'mediumTerm' ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => onClickHandler('mediumTerm')}
-              >
-                Last 6 Months
-              </button>
-              <button 
-                type="button" 
-                className={`btn ${currentDataSet === 'longTerm' ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => onClickHandler('longTerm')}
-              >
-                All Time
-              </button>
-            </div>
-          </div>
+      <div className="container" style={{paddingTop: "5px"}}>
+        <div>
+          <button className="btn btn-outline-info" onClick={() => onClickTimeFrame("shortTerm")} style={{margin: "10px"}}>Short Term</button>
+          <button className="btn btn-outline-info" onClick={() => onClickTimeFrame("mediumTerm")} style={{margin: "10px"}}>Medium Term</button>
+          <button className="btn btn-outline-info" onClick={() => onClickTimeFrame("longTerm")} style={{margin: "10px"}}>Long Term</button>
         </div>
       </div>
 

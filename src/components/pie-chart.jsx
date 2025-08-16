@@ -80,7 +80,7 @@ const GenreChart = ({ genreData }) => {
     // Generate more colors for better variety
     const colors = [
       '#FF6384', '#36A2EB', '#FFCE56', '#39B838', '#A838B8',
-      '#FF9F40', '#4BC0C0', '#9966FF', '#FF99CC', '#FF6B6B'
+      '#FF9F40', '#4BC0C0', '#9966FF', '#FF99CC', '#FF6B6B',
     ]
 
     return {
@@ -101,13 +101,13 @@ const GenreChart = ({ genreData }) => {
     plugins: {
       legend: {
         labels: {
-          color: "#666",
+          color: "#ffffff",
           font: {
             size: 11
           },
           padding: 10
         },
-        position: 'top',
+        position: 'right',
         align: 'start'
       },
       tooltip: {
@@ -136,7 +136,7 @@ const GenreChart = ({ genreData }) => {
   }
 
   return (
-    <div style={{ height: '400px', width: '100%' }}>
+    <div style={{ minHeight: '280px', minWidth: '500px' }}>
       <Pie data={chartData} options={options} />
     </div>
   )

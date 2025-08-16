@@ -16,7 +16,7 @@ const NavBar = () => {
       <div className="container">
         <span className="navbar-brand">Statify</span>
         <div className="collapse navbar-collapse" id="navbarColor02">
-          <ul className="navbar-nav me-auto">
+          <ul className="navbar-nav mr-auto">
             <li className="nav-item">
               <Link to="/" className="nav-link">
                 {accessToken ? 'Home' : 'Login'}
