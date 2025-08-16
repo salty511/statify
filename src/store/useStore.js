@@ -15,6 +15,9 @@ export const useStore = create((set, get) => ({
   playStatus: 'STOPPED', // STOPPED, PLAYING, PAUSED
   previewURL: null,
   
+  // Preview URL cache - maps trackId to preview URL
+  previewUrlCache: new Map(),
+  
   // Actions
   setAccessToken: (token) => set({ accessToken: token }),
   
@@ -43,12 +46,39 @@ export const useStore = create((set, get) => ({
   
   setPreviewURL: (url) => set({ previewURL: url }),
   
+  // Cache a preview URL for a track
+  cachePreviewUrl: (trackId, previewUrl) => {
+    const state = get()
+    const newCache = new Map(state.previewUrlCache)
+    
+    // Optional: Limit cache size to prevent memory issues
+    const MAX_CACHE_SIZE = 100
+    if (newCache.size >= MAX_CACHE_SIZE) {
+      // Remove oldest entries (first in Map)
+      const firstKey = newCache.keys().next().value
+      newCache.delete(firstKey)
+    }
+    
+    newCache.set(trackId, previewUrl)
+    set({ previewUrlCache: newCache })
+  },
+  
+  // Get cached preview URL for a track
+  getCachedPreviewUrl: (trackId) => {
+    const state = get()
+    return state.previewUrlCache.get(trackId)
+  },
+  
+  // Clear cache (useful for logout)
+  clearPreviewUrlCache: () => set({ previewUrlCache: new Map() }),
+  
   logout: () => set({ 
     accessToken: null, 
     user: null, 
     shortTerm: null, 
     mediumTerm: null, 
-    longTerm: null 
+    longTerm: null,
+    previewUrlCache: new Map() // Clear cache on logout
   }),
   
   // Computed values

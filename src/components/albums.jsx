@@ -2,8 +2,11 @@ import React from "react"
 import axios from "axios";
 import * as cheerio from "cheerio";
 import SpotifyWebApi from "spotify-web-api-node";
+import { useStore } from '../store/useStore';
 
 const Album = ({ trackInfo, onClickHandler, accessToken }) => {
+  const { getCachedPreviewUrl, cachePreviewUrl } = useStore();
+
   async function getSpotifyLinks(url) {
     const scraper = process.env.VITE_SCRAPER_URL || "http://localhost:9000/.netlify/functions/api/scrape"
     try {
@@ -80,6 +83,38 @@ const Album = ({ trackInfo, onClickHandler, accessToken }) => {
     }
   }
 
+  const handlePreviewClick = async () => {
+    try {
+      // Check if we have a cached URL first
+      const cachedUrl = getCachedPreviewUrl(trackInfo.trackId);
+      
+      if (cachedUrl) {
+        // Use cached URL directly
+        console.log(`Using cached preview URL for: ${trackInfo.trackName}`);
+        onClickHandler(cachedUrl);
+        return;
+      }
+      
+      // No cached URL, fetch it
+      console.log(`Fetching preview URL for: ${trackInfo.trackName}`);
+      const previewResult = await searchAndGetLinks(trackInfo.trackName, 1);
+      
+      if (previewResult.success && previewResult.results.length > 0) {
+        const song = previewResult.results[0];
+        const previewUrl = song.previewUrls[0];
+        
+        // Cache the URL for future use
+        cachePreviewUrl(trackInfo.trackId, previewUrl);
+        
+        console.log(`Found and cached: ${song.name}`);
+        console.log(`Preview URL: ${previewUrl}`);
+        onClickHandler(previewUrl);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
   return (
     <div style={{ paddingBottom: "10px" }}>
       <div className="card">
@@ -90,21 +125,7 @@ const Album = ({ trackInfo, onClickHandler, accessToken }) => {
             <span
               className="btn-success albumButton"
               style={{ padding: "10px" }}
-              onClick={async () => {
-                  try {
-                    // Search for multiple songs
-                    const previewURL = await searchAndGetLinks(trackInfo.trackName, 1)
-                    if (previewURL.success && previewURL.results.length > 0) {
-                      const song = previewURL.results[0]
-                      console.log(`\nFound: ${song.name}`)
-                      console.log(`Preview URL: ${song.previewUrls[0]}`)
-                      onClickHandler(song.previewUrls[0])
-                    }
-                  } catch (error) {
-                    console.error('Error:', error.message)
-                  }
-              }
-            }
+              onClick={handlePreviewClick}
             >
               Preview
             </span>
