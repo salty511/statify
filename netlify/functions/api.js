@@ -1,9 +1,10 @@
-const express = require("express")
-const serverless = require("serverless-http")
-const request = require("request")
-const querystring = require("querystring")
-const cors = require('cors')
-const axios = require('axios')
+import express from "express"
+import serverless from "serverless-http"
+import querystring from "querystring"
+import cors from "cors"
+import axios from "axios"
+import dotenv from "dotenv"
+dotenv.config()
 
 const app = express()
 const router = express.Router()
@@ -34,32 +35,41 @@ router.get("/login", (req, res) => {
     res.redirect("https://accounts.spotify.com/authorize?" + queryParams)
 })
 
-router.get("/callback", (req, res) => {
-    let code = req.query.code || null
-    let requestOptions = {
-        url: "https://accounts.spotify.com/api/token",
-        form: {
-            grant_type: "authorization_code",
-            code: code,
-            redirect_uri: redirect_uri
-        },
-        headers: {
-            "Authorization": "Basic " + (Buffer.from(
-                process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET
-            ).toString("base64"))
-        },
-        json: true
-    }
-    request.post(requestOptions, (error, response, body) => {
-        let accessToken = body.access_token
-        let uri = process.env.FRONTEND_URI || "http://localhost:3000/main"
+router.get("/callback", async (req, res) => {
+    try {
+        let code = req.query.code || null
+        const tokenResponse = await axios.post("https://accounts.spotify.com/api/token", 
+            querystring.stringify({
+                grant_type: "authorization_code",
+                code: code,
+                redirect_uri: redirect_uri
+            }), 
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Authorization": "Basic " + (Buffer.from(
+                        process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET
+                    ).toString("base64"))
+                }
+            }
+        )
+        
+        let accessToken = tokenResponse.data.access_token
+        let uri = process.env.FRONTEND_URI || "http://localhost:3000"
         console.log("Authorization complete!")
         res.redirect(uri + "?" + "access_token=" + accessToken)
-    })
-
+    } catch (error) {
+        console.error("Error getting access token:", error)
+        res.status(500).send("Error during authorization")
+    }
 })
 
+app.use(cors())
 app.use(`/.netlify/functions/api`, router)
 
-module.exports = app;
-module.exports.handler = serverless(app)
+app.listen(9000, () => {
+    console.log("Server is running on port 9000")
+})
+
+export default app;
+export const handler = serverless(app);
