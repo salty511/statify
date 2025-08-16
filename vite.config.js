@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [react()],
   define: {
     'process.env.VITE_LOGIN_URL': JSON.stringify(process.env.VITE_LOGIN_URL),
+    'process.env.VITE_SCRAPER_URL': JSON.stringify(process.env.VITE_SCRAPER_URL),
   },
   server: {
     port: 3000,
