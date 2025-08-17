@@ -19,7 +19,6 @@ A modern React application that provides detailed analytics and insights about y
 - **Frontend**: React 18 with Hooks
 - **Build Tool**: Vite
 - **State Management**: Zustand
-- **Data Fetching**: React Query (TanStack Query)
 - **Charts**: Chart.js 4 with react-chartjs-2
 - **Styling**: Bootstrap 5
 - **Routing**: React Router 6
