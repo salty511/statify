@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useStore } from './store/useStore'
 import { useSpotifyData } from './hooks/useSpotifyData'
 import queryString from "query-string"
@@ -38,16 +37,6 @@ ChartJS.register(
   ArcElement,
   RadialLinearScale
 )
-
-// Create Query Client
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-})
 
 function AppContent() {
   const { accessToken, setAccessToken } = useStore()
@@ -131,9 +120,7 @@ function AppContent() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppContent />
-    </QueryClientProvider>
+    <AppContent />
   )
 }
 
