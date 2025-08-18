@@ -2,6 +2,10 @@
 
 A modern React application that provides detailed analytics and insights about your Spotify listening habits.
 
+<a href="https://statify-salt.netlify.app" target="_blank">
+  <img src="https://img.shields.io/badge/Live%20Demo-Netlify-green?style=flat-square&logo=netlify" alt="Live Demo Badge">
+</a>
+
 ## 🚀 Features
 
 - **Personalized Music Analytics**: View your top tracks and artists across different time periods
@@ -15,7 +19,6 @@ A modern React application that provides detailed analytics and insights about y
 - **Frontend**: React 18 with Hooks
 - **Build Tool**: Vite
 - **State Management**: Zustand
-- **Data Fetching**: React Query (TanStack Query)
 - **Charts**: Chart.js 4 with react-chartjs-2
 - **Styling**: Bootstrap 5
 - **Routing**: React Router 6
