@@ -92,9 +92,7 @@ const MainPage = () => {
   if (!dataSet) {
     return (
       <div className="container text-center mt-5">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
+        <div className="spinner-border" role="status"></div>
         <p className="mt-3">Loading your music data...</p>
       </div>
     )
