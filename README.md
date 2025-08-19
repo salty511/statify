@@ -6,7 +6,7 @@ A modern React application that provides detailed analytics and insights about y
   <img src="https://img.shields.io/badge/Live%20Demo-Netlify-green?style=flat-square&logo=netlify" alt="Live Demo Badge">
 </a>
 
-## 🚀 Features
+## Features
 
 - **Personalized Music Analytics**: View your top tracks and artists across different time periods
 - **Genre Analysis**: Interactive charts showing your music genre preferences
@@ -14,7 +14,7 @@ A modern React application that provides detailed analytics and insights about y
 - **Real-time Data**: Fetches live data from Spotify Web API
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend**: React 18 with Hooks
 - **Build Tool**: Vite
