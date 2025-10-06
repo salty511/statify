@@ -71,8 +71,6 @@ function AppContent() {
     )
   }
 
-  console.log('Current access token:', accessToken ? 'Present' : 'None')
-
   return (
     <div className="App">
       <Router>

@@ -7,6 +7,7 @@ const GenreChart = ({ genreData }) => {
     if (!genreData || !Array.isArray(genreData)) {
       return { labels: [], datasets: [] }
     }
+    console.log(genreData)
 
     // Calculate genre totals
     const genreTotals = {}
@@ -69,7 +70,7 @@ const GenreChart = ({ genreData }) => {
       processedGenres.add(currentGenre.name)
     }
 
-    // Take top 8-10 grouped genres for better visualization
+    // Take top 10 grouped genres for better visualization
     const finalGenres = groupedGenres
       .sort((a, b) => b.value - a.value)
       .slice(0, 10)
