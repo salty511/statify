@@ -4,6 +4,7 @@ import UserInfo from "./user-info.jsx"
 import GenreChart from './pie-chart.jsx'
 import Album from "./albums.jsx"
 import AudioPlayer from "./audio-player.jsx"
+import SpotifyEmbed from "./spotify-embed.jsx"
 import "../App.css"
 import "./albums-style.css"
 
@@ -16,7 +17,8 @@ const MainPage = () => {
     previewURL, 
     setPreviewURL,
     getCurrentDataSet,
-    accessToken
+    accessToken,
+    embedTrackID
   } = useStore()
 
   const dataSet = getCurrentDataSet()
@@ -42,15 +44,29 @@ const MainPage = () => {
     )
   }, [accessToken])
 
+  const renderSpotifyPlayer = useCallback(() => {
+    console.log('renderSpotifyPlayer called with embedTrackID:', embedTrackID)
+    return <SpotifyEmbed trackID={embedTrackID}/>
+  }, [embedTrackID])
+
   const renderInfoAndGraphs = useCallback((dataSet) => {
     if (!dataSet) return null
-    
+
     return (
-      <div className="container" style={{paddingBottom: "30px", paddingTop: "10px", display: "flex", justifyContent: "center"}}>
-            <GenreChart genreData={dataSet.topArtists}/>
+      <div className="container" style={{paddingBottom: "0px", paddingTop: "10px"}}>
+        <div className="grid">
+          <div className="row">
+            <div className="col-6" style={{paddingTop: '30px'}}>
+              {renderSpotifyPlayer()}
+            </div>
+            <div className="col-2" style={{paddingTop: '20px'}}>
+              <GenreChart genreData={dataSet.topArtists}/>
+            </div>
+          </div>
+        </div>
       </div>
     )
-  }, [])
+  }, [dataSet, embedTrackID])
 
   const onClickTimeFrame = useCallback((timeFrame) => {
     setCurrentDataSet(timeFrame)
@@ -115,7 +131,6 @@ const MainPage = () => {
           <button className="btn btn-outline-info" onClick={() => onClickTimeFrame("longTerm")} style={{margin: "10px"}}>Long Term</button>
         </div>
       </div>
-
       {renderInfoAndGraphs(dataSet)}
       {renderAlbums(dataSet)}
     </div>

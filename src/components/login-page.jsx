@@ -4,7 +4,7 @@ const LoginPage = ({ accessToken }) => {
 
   const handleLogin = () => {
 
-    const authUrl = process.env.VITE_LOGIN_URL || "http://localhost:9000/netlify/functions/api/login"
+    const authUrl = process.env.VITE_LOGIN_URL || "http://localhost:9000/.netlify/functions/api/login"
     window.location.href = authUrl
   }
 

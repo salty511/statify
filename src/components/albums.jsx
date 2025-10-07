@@ -6,7 +6,9 @@ import { useStore } from '../store/useStore';
 
 const Album = ({ trackInfo, onClickHandler, accessToken }) => {
   const { getCachedPreviewUrl, cachePreviewUrl } = useStore();
+  const { getEmbedTrackID, setEmbedTrackID } = useStore()
 
+  // Deprecated, using player embde instead
   async function getSpotifyLinks(url) {
     const scraper = process.env.VITE_SCRAPER_URL || "http://localhost:9000/.netlify/functions/api/scrape"
     try {
@@ -84,6 +86,7 @@ const Album = ({ trackInfo, onClickHandler, accessToken }) => {
   }
 
   const handlePreviewClick = async () => {
+    // DEPRACATED - USING SPOTIFY PLAYER EMBED - handlePreviewClickEmbed
     try {
       // Check if we have a cached URL first
       const cachedUrl = getCachedPreviewUrl(trackInfo.trackId);
@@ -115,6 +118,14 @@ const Album = ({ trackInfo, onClickHandler, accessToken }) => {
     }
   };
 
+  function handlePreviewClickEmbed() {
+    console.log('handlePreviewClickEmbed called for trackId:', trackInfo.trackId)
+    const embedId = trackInfo.trackId
+    console.log('setting embedTrackID to:', embedId)
+    setEmbedTrackID(embedId)
+    console.log('after set, getEmbedTrackID():', getEmbedTrackID())
+  };
+
   return (
     <div style={{ paddingBottom: "10px" }}>
       <div className="card">
@@ -128,6 +139,13 @@ const Album = ({ trackInfo, onClickHandler, accessToken }) => {
               onClick={handlePreviewClick}
             >
               Preview
+            </span>
+            <span
+              className="btn-success albumButton"
+              style={{ padding: "10px" }}
+              onClick={handlePreviewClickEmbed}
+            >
+              Play in embed
             </span>
           </div>
         </div>)}

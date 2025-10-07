@@ -9,6 +9,10 @@
   opacity: 0;
   position: absolute;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 }
 
 .img-preview-button {

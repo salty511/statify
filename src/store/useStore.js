@@ -17,6 +17,9 @@ export const useStore = create((set, get) => ({
   
   // Preview URL cache - maps trackId to preview URL
   previewUrlCache: new Map(),
+
+  // New embed player URI
+  embedTrackID: null,
   
   // Actions
   setAccessToken: (token) => set({ accessToken: token }),
@@ -45,7 +48,9 @@ export const useStore = create((set, get) => ({
   setPlayStatus: (status) => set({ playStatus: status }),
   
   setPreviewURL: (url) => set({ previewURL: url }),
-  
+
+  getEmbedTrackID: () => get().embedTrackID,
+
   // Cache a preview URL for a track
   cachePreviewUrl: (trackId, previewUrl) => {
     const state = get()
@@ -80,6 +85,11 @@ export const useStore = create((set, get) => ({
     longTerm: null,
     previewUrlCache: new Map() // Clear cache on logout
   }),
+
+  setEmbedTrackID: (newTrackID) => {
+    console.log('setEmbedTrackID called with:', newTrackID)
+    set({ embedTrackID: newTrackID})
+  },
   
   // Computed values
   getCurrentDataSet: () => {

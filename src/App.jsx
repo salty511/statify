@@ -40,9 +40,8 @@ ChartJS.register(
 
 function AppContent() {
   const { accessToken, setAccessToken } = useStore()
-  const [isInitialized, setIsInitialized] = useState(false)
+  const [ isInitialized, setIsInitialized ] = useState(false)
   
-  // Initialize data fetching only after token is set
   useSpotifyData()
 
   useEffect(() => {
@@ -57,7 +56,7 @@ function AppContent() {
     setIsInitialized(true)
   }, [accessToken, setAccessToken])
 
-  // Don't render anything until we've checked for tokens
+  // Don't render anything until data has been fetched
   if (!isInitialized) {
     return (
       <div className="App">

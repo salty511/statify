@@ -8,7 +8,9 @@ export const useSpotifyData = () => {
     setUser, 
     shortTerm, 
     mediumTerm, 
-    longTerm 
+    longTerm,
+    embedTrackID,
+    setEmbedTrackID
   } = useStore()
 
   const fetchUserData = async (token) => {
@@ -65,6 +67,8 @@ export const useSpotifyData = () => {
         if ((artistName + albumName).length >= maxBottomLine) {
           albumName = albumName.slice(0, (maxBottomLine - artistName.length - 3)) + "..."
         }
+
+
         
         return {
           albumName,
@@ -136,6 +140,7 @@ export const useSpotifyData = () => {
       }
       
       setMusicData(timeRange, musicData)
+      setEmbedTrackID(topTracks[0].trackId)
       console.log(`${timeRange}: Data fetch complete`)
     } catch (error) {
       console.error(`Error in fetchDataForTimeRange for ${timeRange}:`, error)
@@ -150,6 +155,7 @@ export const useSpotifyData = () => {
       fetchDataForTimeRange(accessToken, 'short_term')
       fetchDataForTimeRange(accessToken, 'medium_term')
       fetchDataForTimeRange(accessToken, 'long_term')
+
     } else {
       console.log('No access token available, skipping data fetch')
     }
