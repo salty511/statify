@@ -8,8 +8,12 @@ const Album = ({ trackInfo, onClickHandler, accessToken }) => {
   const { getCachedPreviewUrl, cachePreviewUrl } = useStore();
   const { getEmbedTrackID, setEmbedTrackID } = useStore()
 
-  // Deprecated, using player embde instead
+  
   async function getSpotifyLinks(url) {
+    /* 
+      NOT MY CODE
+      FROM REPO - https://github.com/AliAkhtari78/SpotifyScraper  
+    */
     const scraper = process.env.VITE_SCRAPER_URL || "http://localhost:9000/.netlify/functions/api/scrape"
     try {
       const response = await axios.get(scraper, {
@@ -35,14 +39,13 @@ const Album = ({ trackInfo, onClickHandler, accessToken }) => {
       throw new Error(`Failed to fetch preview URLs: ${error.message}`);
     }
   }
-  
-  /**
-   * Search for songs and get their preview URLs
-   * @param {string} songName - The name of the song to search for
-   * @param {number} [limit=5] - Maximum number of results to return
-   * @returns {Promise<Object>} Object containing success status and results
-   */
+
+
   async function searchAndGetLinks(songName, limit = 5) {
+    /* 
+      NOT MY CODE
+      FROM REPO - https://github.com/AliAkhtari78/SpotifyScraper  
+    */
     try {
       if (!songName) {
         throw new Error('Song name is required');
@@ -86,7 +89,6 @@ const Album = ({ trackInfo, onClickHandler, accessToken }) => {
   }
 
   const handlePreviewClick = async () => {
-    // DEPRACATED - USING SPOTIFY PLAYER EMBED - handlePreviewClickEmbed
     try {
       // Check if we have a cached URL first
       const cachedUrl = getCachedPreviewUrl(trackInfo.trackId);
